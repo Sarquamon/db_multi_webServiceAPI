@@ -8,7 +8,7 @@ const User = require("../../models/userModel");
 router.post("/signup", (req, res, next) => {
   const { userEmail, userName } = req.body;
 
-  User.findOne({ userEmail: userEmail })
+  User.find({ userEmail: userEmail })
     .exec()
     .then(user => {
       if (user.length <= 0) {
