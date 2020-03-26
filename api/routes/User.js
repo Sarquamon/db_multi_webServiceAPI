@@ -116,4 +116,27 @@ router.delete("/:userEmail", (req, res, next) => {
   }
 });
 
+router.put("/:userEmail", (req, res, next) => {
+  const { userEmail } = req.params;
+
+  const { userName } = req.body;
+
+  User.findOneAndUpdate({ userEmail: userEmail }, { userName }, { new: true })
+    .exec()
+    .then(result => {
+      console.log(result);
+      return res.status(200).json({
+        message: "Exito!",
+        description: `Se actualizo el nombre a ${userName}`
+      });
+    })
+    .catch(err => {
+      console.log(`Error! ${err}`);
+      return res.status(500).json({
+        message: "Error!",
+        error: err
+      });
+    });
+});
+
 module.exports = router;
