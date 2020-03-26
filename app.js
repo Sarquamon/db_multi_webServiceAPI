@@ -8,7 +8,7 @@ const app = express();
 
 const userRoutes = require("./api/routes/User");
 
-const MONGODBURL = `mongodb+srv://tester:${process.env.MONGODB_ATLAS_PWDTESTER}@developmentapps-lmcx2.mongodb.net/test?retryWrites=true&w=majority`;
+const MONGODBURL = `mongodb+srv://${process.env.MONGODB_ATLAS_USERTESTER}:${process.env.MONGODB_ATLAS_PWDTESTER}@developmentapps-lmcx2.mongodb.net/test?retryWrites=true&w=majority`;
 
 mongoose.connect(
   MONGODBURL,
