@@ -86,10 +86,10 @@ router.delete("/:userEmail", (req, res, next) => {
   }
 });
 
-router.put("/:userEmail", (req, res, next) => {
-  const { userEmail } = req.params;
+router.put("/:userEmail/:userName", (req, res, next) => {
+  const { userEmail, userName } = req.params;
 
-  const { userName } = req.body;
+  console.log(userEmail, userName);
 
   User.findOneAndUpdate({ userEmail: userEmail }, { userName }, { new: true })
     .exec()
