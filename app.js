@@ -6,7 +6,7 @@ require("dotenv").config();
 
 const app = express();
 
-const userRoutes = require("./api/routes/user");
+const userRoutes = require("./api/routes/User");
 
 const MONGODBURL = `mongodb+srv://tester:${process.env.MONGODB_ATLAS_PWDTESTER}@developmentapps-lmcx2.mongodb.net/test?retryWrites=true&w=majority`;
 
