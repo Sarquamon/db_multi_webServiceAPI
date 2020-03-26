@@ -8,7 +8,7 @@ const User = require("../../models/userModel");
 router.post("/signup", (req, res, next) => {
   const { userEmail, userName } = req.body;
 
-  User.find({ userEmail: userEmail })
+  User.findOne({ userEmail: userEmail })
     .exec()
     .then(user => {
       if (user.length <= 0) {
@@ -45,36 +45,6 @@ router.post("/signup", (req, res, next) => {
       console.log(`Error! ${err}`);
       res.status(500).json({
         message: `Error`,
-        error: err
-      });
-    });
-});
-
-router.post("/login", (req, res, next) => {
-  const { userEmail } = req.body;
-
-  User.find({ userEmail: userEmail })
-    .exec()
-    .then(result => {
-      if (result.length >= 1) {
-        console.log(`Success! \nUser: ${userEmail}.\nAuth Successful`);
-
-        return res.status(200).json({
-          message: "Autorizado!",
-          userEmail: result[0].userEmail,
-          userName: result[0].userName
-        });
-      } else {
-        console.log("User does not exist");
-        return res.status(404).json({
-          message: "Usuario no existe"
-        });
-      }
-    })
-    .catch(err => {
-      console.log(`Error! \n${err}`);
-      res.status(500).json({
-        message: "Error!",
         error: err
       });
     });
@@ -134,6 +104,49 @@ router.put("/:userEmail", (req, res, next) => {
       console.log(`Error! ${err}`);
       return res.status(500).json({
         message: "Error!",
+        error: err
+      });
+    });
+});
+
+router.get("/all", (req, res, next) => {
+  User.find()
+    .exec()
+    .then(result => {
+      if (result) {
+        if (result.length >= 1) {
+          console.log(`Exito! \n${result}`);
+
+          const users = [];
+
+          result.forEach(user => {
+            users.push({
+              Name: user.userName,
+              Email: user.userEmail
+            });
+          });
+
+          return res.status(200).json({
+            message: "Success!",
+            content: users
+          });
+        } else {
+          return res.status(404).json({
+            message: "Error 3!",
+            error: "Usuarios nulos"
+          });
+        }
+      } else {
+        return res.status(404).json({
+          message: "Error 2!",
+          error: "Usuarios nulos"
+        });
+      }
+    })
+    .catch(err => {
+      console.log(`Error! ${err}`);
+      return res.status(500).json({
+        message: "Error 1!",
         error: err
       });
     });
